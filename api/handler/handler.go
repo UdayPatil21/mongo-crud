@@ -36,6 +36,7 @@ func (a *App) CreateHandler(response http.ResponseWriter, request *http.Request)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	emp.ID = primitive.NewObjectID()
 	res, err := a.DB.Database("gslab").Collection("employee").InsertOne(ctx, emp)
 	if err != nil {
 		response.WriteHeader(http.StatusExpectationFailed)

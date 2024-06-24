@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"mongo-crud/api/handler"
 	"mongo-crud/internal/database"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -16,7 +17,11 @@ type App struct {
 }
 
 func NewApp() *App {
-	db, err := database.InitDB("mongodb://localhost:27017")
+	mongoUrl := os.Getenv("MONGO_URI")
+	if mongoUrl == "" {
+		log.Fatal("MONGODB_URL  environment variable not set")
+	}
+	db, err := database.InitDB(mongoUrl)
 	if err != nil {
 		panic(err)
 	}
@@ -25,6 +30,7 @@ func NewApp() *App {
 }
 func (a *App) InitializeRoutes() {
 	handler := handler.NewApp(a.DB.Client)
+
 	r := a.Router.PathPrefix("/api").Subrouter()
 	r.HandleFunc("/", handler.CreateHandler).Methods("POST")
 	r.HandleFunc("/", handler.GetAllHandler).Methods("GET")
