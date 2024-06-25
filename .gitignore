@@ -1,0 +1,6 @@
+
+# binaries and exe's
+*.exe
+*.sh
+
+.env

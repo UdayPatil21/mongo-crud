@@ -9,8 +9,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type Collection interface {
+	InsertOne(ctx context.Context, document interface{}, opts ...*options.InsertOneOptions) (*mongo.InsertOneResult, error)
+	FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) *mongo.SingleResult
+	UpdateOne(ctx context.Context, filer interface{}, update interface{}, opts ...*options.UpdateOptions) (*mongo.UpdateResult, error)
+	DeleteOne(ctx context.Context, filter interface{}, opts ...*options.DeleteOptions) (*mongo.DeleteResult, error)
+}
+
 type Database struct {
-	Client *mongo.Client
+	Client *mongo.Collection
 }
 
 func InitDB(url string) (*Database, error) {
@@ -30,6 +37,6 @@ func InitDB(url string) (*Database, error) {
 	}
 	fmt.Println("Connected to MongoDB")
 	return &Database{
-		Client: client,
+		Client: client.Database("gslab").Collection("employee"),
 	}, nil
 }

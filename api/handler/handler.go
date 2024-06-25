@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"log"
+	"mongo-crud/internal/database"
 	"mongo-crud/model"
 	"net/http"
 	"time"
@@ -12,15 +13,14 @@ import (
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type App struct {
-	DB *mongo.Client
+	Collection database.Collection
 }
 
-func NewApp(db *mongo.Client) *App {
-	return &App{DB: db}
+func NewApp(collection database.Collection) *App {
+	return &App{Collection: collection}
 }
 
 // Insert employee data into the database
@@ -37,7 +37,7 @@ func (a *App) CreateHandler(response http.ResponseWriter, request *http.Request)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	emp.ID = primitive.NewObjectID()
-	res, err := a.DB.Database("gslab").Collection("employee").InsertOne(ctx, emp)
+	res, err := a.Collection.InsertOne(ctx, emp)
 	if err != nil {
 		response.WriteHeader(http.StatusExpectationFailed)
 		response.Write([]byte(err.Error()))
@@ -50,26 +50,26 @@ func (a *App) CreateHandler(response http.ResponseWriter, request *http.Request)
 }
 
 // Get all employee data from database
-func (a *App) GetAllHandler(response http.ResponseWriter, request *http.Request) {
-	var empData []model.Employee
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	res, err := a.DB.Database("gslab").Collection("employee").Find(ctx, bson.D{})
-	if err != nil {
-		response.WriteHeader(http.StatusExpectationFailed)
-		response.Write([]byte(err.Error()))
-		return
-	}
-	err = res.All(ctx, &empData)
-	if err != nil {
-		response.WriteHeader(http.StatusExpectationFailed)
-		response.Write([]byte(err.Error()))
-		return
-	}
-	response.WriteHeader(http.StatusOK)
-	resByte, _ := json.Marshal(empData)
-	response.Write(resByte)
-}
+// func (a *App) GetAllHandler(response http.ResponseWriter, request *http.Request) {
+// 	var empData []model.Employee
+// 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+// 	defer cancel()
+// 	res, err := a.DB.Find(ctx, bson.D{})
+// 	if err != nil {
+// 		response.WriteHeader(http.StatusExpectationFailed)
+// 		response.Write([]byte(err.Error()))
+// 		return
+// 	}
+// 	err = res.All(ctx, &empData)
+// 	if err != nil {
+// 		response.WriteHeader(http.StatusExpectationFailed)
+// 		response.Write([]byte(err.Error()))
+// 		return
+// 	}
+// 	response.WriteHeader(http.StatusOK)
+// 	resByte, _ := json.Marshal(empData)
+// 	response.Write(resByte)
+// }
 
 // Get employee by id
 func (a *App) GetHandler(response http.ResponseWriter, request *http.Request) {
@@ -78,7 +78,7 @@ func (a *App) GetHandler(response http.ResponseWriter, request *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	var emp model.Employee
-	_ = a.DB.Database("gslab").Collection("employee").FindOne(ctx, bson.D{{"_id", id}}).Decode(&emp)
+	_ = a.Collection.FindOne(ctx, bson.D{{"_id", id}}).Decode(&emp)
 	response.WriteHeader(http.StatusOK)
 	resByte, _ := json.Marshal(emp)
 	response.Write(resByte)
@@ -107,7 +107,7 @@ func (a *App) UpdateHandler(response http.ResponseWriter, request *http.Request)
 	defer cancel()
 
 	update := bson.M{"$set": emp}
-	res, err := a.DB.Database("gslab").Collection("employee").UpdateOne(ctx, bson.D{{"_id", id}}, update)
+	res, err := a.Collection.UpdateOne(ctx, bson.D{{"_id", id}}, update)
 	if err != nil {
 		response.WriteHeader(http.StatusExpectationFailed)
 		response.Write([]byte(err.Error()))
@@ -128,7 +128,7 @@ func (a *App) DeleteHandler(response http.ResponseWriter, request *http.Request)
 	id, _ := primitive.ObjectIDFromHex(params["id"])
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	res, err := a.DB.Database("gslab").Collection("employee").DeleteOne(ctx, bson.D{{"_id", id}})
+	res, err := a.Collection.DeleteOne(ctx, bson.D{{"_id", id}})
 	if err != nil {
 		response.WriteHeader(http.StatusExpectationFailed)
 		response.Write([]byte(err.Error()))

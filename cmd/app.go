@@ -19,7 +19,8 @@ type App struct {
 func NewApp() *App {
 	mongoUrl := os.Getenv("MONGO_URI")
 	if mongoUrl == "" {
-		log.Fatal("MONGODB_URL  environment variable not set")
+		mongoUrl = "mongodb://localhost:27017"
+		log.Println("MONGODB_URL  environment variable not set")
 	}
 	db, err := database.InitDB(mongoUrl)
 	if err != nil {
@@ -33,7 +34,7 @@ func (a *App) InitializeRoutes() {
 
 	r := a.Router.PathPrefix("/api").Subrouter()
 	r.HandleFunc("/", handler.CreateHandler).Methods("POST")
-	r.HandleFunc("/", handler.GetAllHandler).Methods("GET")
+	// r.HandleFunc("/", handler.GetAllHandler).Methods("GET")
 	r.HandleFunc("/{id}", handler.UpdateHandler).Methods("PUT")
 	r.HandleFunc("/{id}", handler.DeleteHandler).Methods("DELETE")
 	r.HandleFunc("/{id}", handler.GetHandler).Methods("GET")
