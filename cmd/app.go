@@ -1,11 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"mongo-crud/api/handler"
 	"mongo-crud/internal/database"
-	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
@@ -39,12 +37,4 @@ func (a *App) InitializeRoutes() {
 	r.HandleFunc("/{id}", handler.DeleteHandler).Methods("DELETE")
 	r.HandleFunc("/{id}", handler.GetHandler).Methods("GET")
 
-}
-
-func main() {
-	fmt.Println("Welcome to Golang")
-	app := NewApp()
-	app.InitializeRoutes()
-	log.Println("Server is running ....")
-	http.ListenAndServe(":8080", app.Router)
 }
