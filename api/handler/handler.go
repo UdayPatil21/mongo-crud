@@ -50,26 +50,26 @@ func (a *App) CreateHandler(response http.ResponseWriter, request *http.Request)
 }
 
 // Get all employee data from database
-// func (a *App) GetAllHandler(response http.ResponseWriter, request *http.Request) {
-// 	var empData []model.Employee
-// 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-// 	defer cancel()
-// 	res, err := a.DB.Find(ctx, bson.D{})
-// 	if err != nil {
-// 		response.WriteHeader(http.StatusExpectationFailed)
-// 		response.Write([]byte(err.Error()))
-// 		return
-// 	}
-// 	err = res.All(ctx, &empData)
-// 	if err != nil {
-// 		response.WriteHeader(http.StatusExpectationFailed)
-// 		response.Write([]byte(err.Error()))
-// 		return
-// 	}
-// 	response.WriteHeader(http.StatusOK)
-// 	resByte, _ := json.Marshal(empData)
-// 	response.Write(resByte)
-// }
+func (a *App) GetAllHandler(response http.ResponseWriter, request *http.Request) {
+	var empData []model.Employee
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	res, err := a.Collection.Find(ctx, bson.D{})
+	if err != nil {
+		response.WriteHeader(http.StatusExpectationFailed)
+		response.Write([]byte(err.Error()))
+		return
+	}
+	err = res.All(ctx, &empData)
+	if err != nil {
+		response.WriteHeader(http.StatusExpectationFailed)
+		response.Write([]byte(err.Error()))
+		return
+	}
+	response.WriteHeader(http.StatusOK)
+	resByte, _ := json.Marshal(empData)
+	response.Write(resByte)
+}
 
 // Get employee by id
 func (a *App) GetHandler(response http.ResponseWriter, request *http.Request) {

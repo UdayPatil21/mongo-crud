@@ -21,6 +21,10 @@ func (m *MockCollection) FindOne(ctx context.Context, filter interface{}, opts .
 	args := m.Called(ctx, filter, opts)
 	return args.Get(0).(*mongo.SingleResult)
 }
+func (m *MockCollection) Find(ctx context.Context, filter interface{}, opts ...*options.FindOptions) (*mongo.Cursor, error) {
+	args := m.Called(ctx, filter, opts)
+	return args.Get(0).(*mongo.Cursor), args.Error(1)
+}
 func (m *MockCollection) UpdateOne(ctx context.Context, filter interface{}, update interface{}, opts ...*options.UpdateOptions) (*mongo.UpdateResult, error) {
 	args := m.Called(ctx, filter, opts)
 	return args.Get(0).(*mongo.UpdateResult), args.Error(1)
