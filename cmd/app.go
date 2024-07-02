@@ -31,10 +31,10 @@ func (a *App) InitializeRoutes() {
 	handler := handler.NewApp(a.DB.Client)
 
 	r := a.Router.PathPrefix("/api").Subrouter()
-	r.HandleFunc("/", handler.CreateHandler).Methods("POST")
-	// r.HandleFunc("/", handler.GetAllHandler).Methods("GET")
-	r.HandleFunc("/{id}", handler.UpdateHandler).Methods("PUT")
-	r.HandleFunc("/{id}", handler.DeleteHandler).Methods("DELETE")
-	r.HandleFunc("/{id}", handler.GetHandler).Methods("GET")
+	r.HandleFunc("/employee", handler.CreateHandler).Methods("POST")
+	r.HandleFunc("/employee", handler.GetAllHandler).Methods("GET")
+	r.HandleFunc("/employee/{id}", handler.UpdateHandler).Methods("PUT")
+	r.HandleFunc("/employee/{id}", handler.DeleteHandler).Methods("DELETE")
+	r.HandleFunc("/employee/{id}", handler.GetHandler).Methods("GET")
 
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+//go:generate swagger generate spec -o swagger.json
 func main() {
 	fmt.Println("Welcome to Golang")
 	err := godotenv.Load()

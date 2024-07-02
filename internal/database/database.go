@@ -21,6 +21,7 @@ type Database struct {
 	Client *mongo.Collection
 }
 
+// Connect to mongo DB
 func InitDB(url string) (*Database, error) {
 
 	clientOptions := options.Client().ApplyURI(url)

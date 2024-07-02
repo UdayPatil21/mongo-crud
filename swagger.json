@@ -1,0 +1,174 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "the purpose of this application is to provide an application\nthat is using go code to define an  Rest API",
+    "title": "Employee API.",
+    "version": "0.0.1"
+  },
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "paths": {
+    "/employee": {
+      "get": {
+        "description": "Returns existing Employees",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get Employee",
+        "operationId": "GetAllHandler",
+        "responses": {
+          "200": {
+            "description": "employee data",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          },
+          "403": {
+            "description": "Forbidden, you are not allowed to undertake this operation"
+          },
+          "405": {
+            "description": "Method Not Allowed, likely url is not correct"
+          }
+        }
+      },
+      "post": {
+        "description": "# Returns new Employee",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Add new Employee",
+        "operationId": "CreateHandler",
+        "parameters": [
+          {
+            "$ref": "#/definitions/Employee",
+            "description": "add employee data",
+            "name": "employee",
+            "in": "body",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/employee/{id}": {
+      "get": {
+        "description": "# Returns existing Employee filtered by fname",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get Employee",
+        "operationId": "GetHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "fname",
+            "in": "path",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "description": "Update existing Employee filtered by id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Update Employee",
+        "operationId": "UpdateHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "fname",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "add employee data",
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee response",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          },
+          "403": {
+            "description": "Forbidden, you are not allowed to undertake this operation"
+          },
+          "405": {
+            "description": "Method Not Allowed, likely url is not correct"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete existing Employee filtered by id",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete Employee",
+        "operationId": "DeleteHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "fname",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "delete employee sucessfully",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          },
+          "403": {
+            "description": "Forbidden, you are not allowed to undertake this operation"
+          },
+          "405": {
+            "description": "Method Not Allowed, likely url is not correct"
+          }
+        }
+      }
+    }
+  }
+}
