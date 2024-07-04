@@ -33,6 +33,6 @@ jobs:
         image: udaypatil21/goapp
         tags: latest
         registry: docker.io
-        dockerfile: Dockerfile
+        dockerfile: mongo-crud/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
