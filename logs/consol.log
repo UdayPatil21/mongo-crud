@@ -1,0 +1,20 @@
+2024-08-27T10:00:00Z [INFO] [main.go:15] Application starting up
+2024-08-27T10:00:01Z [INFO] [server.go:23] Listening on port 8080
+2024-08-27T10:00:05Z [INFO] [router.go:50] Route /api/v1/users matched
+2024-08-27T10:00:06Z [INFO] [handler.go:32] Processing request for user ID 123
+2024-08-27T10:00:07Z [INFO] [db.go:45] Querying database for user ID 123
+2024-08-27T10:00:07Z [DEBUG] [db.go:48] SQL Query: SELECT * FROM users WHERE id = 123
+2024-08-27T10:00:08Z [INFO] [db.go:52] Database query executed successfully
+2024-08-27T10:00:08Z [INFO] [handler.go:36] User details fetched successfully
+2024-08-27T10:00:09Z [INFO] [router.go:50] Route /api/v1/users matched
+2024-08-27T10:00:10Z [ERROR] [handler.go:42] Error processing request: invalid user ID
+2024-08-27T10:00:11Z [WARN] [middleware.go:75] Request took longer than expected: 120ms
+2024-08-27T10:00:12Z [INFO] [router.go:50] Route /api/v1/orders matched
+2024-08-27T10:00:12Z [INFO] [handler.go:58] Processing order request for order ID 456
+2024-08-27T10:00:13Z [INFO] [db.go:45] Querying database for order ID 456
+2024-08-27T10:00:13Z [DEBUG] [db.go:48] SQL Query: SELECT * FROM orders WHERE id = 456
+2024-08-27T10:00:14Z [INFO] [db.go:52] Database query executed successfully
+2024-08-27T10:00:14Z [INFO] [handler.go:62] Order details fetched successfully
+2024-08-27T10:00:20Z [INFO] [main.go:20] Graceful shutdown initiated
+2024-08-27T10:00:21Z [INFO] [server.go:28] Server stopped listening on port 8080
+2024-08-27T10:00:22Z [INFO] [main.go:25] Application shutdown complete

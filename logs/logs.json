@@ -1,0 +1,46 @@
+[
+    {
+        "timestamp": "2024-08-27T10:00:00Z",
+        "level": "info",
+        "message": "Starting server on port 8080"
+    },
+    {
+        "timestamp": "2024-08-27T10:01:15Z",
+        "level": "info",
+        "message": "Received request",
+        "details": {
+            "ip": "192.168.1.1",
+            "method": "GET",
+            "path": "/api/data"
+        }
+    },
+    {
+        "timestamp": "2024-08-27T10:01:16Z",
+        "level": "info",
+        "message": "Request processed successfully",
+        "details": {
+            "duration": "1.2s"
+        }
+    },
+    {
+        "timestamp": "2024-08-27T10:02:30Z",
+        "level": "warn",
+        "message": "High memory usage detected",
+        "details": {
+            "memory_usage": "85%"
+        }
+    },
+    {
+        "timestamp": "2024-08-27T10:03:45Z",
+        "level": "error",
+        "message": "Failed to connect to database",
+        "details": {
+            "error": "connection timeout"
+        }
+    },
+    {
+        "timestamp": "2024-08-27T10:04:00Z",
+        "level": "info",
+        "message": "Shutting down server"
+    }
+]

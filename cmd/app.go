@@ -15,6 +15,7 @@ type App struct {
 }
 
 func NewApp() *App {
+
 	mongoUrl := os.Getenv("MONGO_URI")
 	if mongoUrl == "" {
 		mongoUrl = "mongodb://localhost:27017"
